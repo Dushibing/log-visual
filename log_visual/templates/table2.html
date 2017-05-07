@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block content %}
+    <table class="table table-bordered" style="margin-top: 80px">
+        <caption>Top 10 access</caption>
+          <thead>
+            <tr>
+              <th>Client ip</th>
+              <th>URL</th>
+                <th>Count</th>
+            </tr>
+          </thead>
+          <tbody>
+                {% for foo in top_sort %}
+                    <tr>
+                        <th>{{ foo.0 }}</th>
+                        <th>{{ foo.1 }}</th>
+                        <th>{{ foo.2 }}</th>
+                     </tr>
+                {% endfor %}
+          </tbody>
+    </table>
+    <div class="span12" style="float:right">
+            <div class="span4">
+                    {% for item in top_sort %}
+                        {{ item.full_name|upper }}<br/>
+                    {% endfor %}
+                <div class="pagination">
+                    {% if top_sort.has_previous %}
+                        <li><a href="?page={{ top_sort.previous_page_number }}">pervios</a></li>
+                    {% endif %}
+                    <li><a href="">Page {{ top_sort.number }} of {{ top_sort.paginator.num_pages}}</a></li>
+                    {% if top_sort.has_next %}
+                        <li><a href="?page={{ top_sort.next_page_number }}">next</a></li>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+{% endblock %}

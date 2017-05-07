@@ -1,0 +1,41 @@
+#floorplan0501{
+	
+}
+
+#floorplan-svg-PHN009491{
+	margin-top: 20px;
+}
+	
+
+#rackdettail tr{
+	background-position:center;
+	background-repeat:no-repeat;
+	text-align: center;
+	background: url(../img/jg.gif);
+	background-size: 100% 440px;
+}
+
+.media table{
+	height: 440px;
+	width: 144px;
+}
+
+.media table td{
+	color: white;
+	width: 10px;
+}
+
+.media table td img{
+	height: 200px;
+	width: 20px;
+	padding: left;
+}
+
+.media table td p{
+	margin: -79px 24px 9px;
+	writing-mode:tb-rl;
+}
+
+table caption{
+	color:green;
+}

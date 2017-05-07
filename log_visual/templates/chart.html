@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block content %}
+    <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+    <div id="main" style="width:600px; height:400px; margin-top: 80px;"></div>
+    <div id="line" style="width:600px; height:400px; margin-top: 400px;"></div>
+{% endblock %}
+
+{% block script %}
+    <script src="{% static "js/echarts.min.js" %}"></script>
+    <script src="{% static "js/vintage.js" %}"></script>
+    <script type="text/javascript">
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('main'));
+        var lineChart = echarts.init(document.getElementById('line'));
+        // 指定图表的配置项和数据
+        x_kind = [{% for item in top_10 %} "{{ item.0 }}", {% endfor %}];
+        y_value = [{% for item in top_10 %} "{{ item.1 }}", {% endfor %}];
+        var date_x = new Array;
+        var date_time = new Array;
+        //line chart  date
+        {% for k, v in access_date %}
+            date_x.push("{{ k }}");
+            date_time.push("{{ v }}");
+        {% endfor %}
+        console.log(date_x,date_time);
+        var option = {
+            title: {
+                text: 'Top10 access'
+            },
+            tooltip: {},
+            legend: {
+                data:['Times']
+            },
+            toolbox: {
+                show : true,
+                feature : {
+                    mark : {show: true},
+                    dataView : {show: true, readOnly: false},
+                    magicType : {show: true, type: ['line', 'bar', 'stack', 'tiled']},
+                    restore : {show: true},
+                    saveAsImage : {show: true}
+                }
+            },
+            dataZoom: {
+                show: true,
+                start : 50
+            },
+            xAxis: {
+                data: x_kind
+            },
+            yAxis: {},
+            series: [{
+                name: 'access times',
+                type: 'bar',
+                data: y_value
+            }]
+        };
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+
+        option2 = {
+            title : {
+                text: 'Each Day Total Access Times',
+                subtext: 'Whole website'
+            },
+            tooltip : {
+                trigger: 'axis'
+            },
+            legend: {
+                data:['Total Times']
+            },
+            toolbox: {
+                show : true,
+                feature : {
+                    mark : {show: true},
+                    dataView : {show: true, readOnly: false},
+                    magicType : {show: true, type: ['line', 'bar', 'stack', 'tiled']},
+                    restore : {show: true},
+                    saveAsImage : {show: true}
+                }
+            },
+             dataZoom: {
+                show: true,
+                start : 50
+            },
+            calculable : true,
+            xAxis : [
+                {
+                    type : 'category',
+                    boundaryGap : false,
+                    data : date_x
+                }
+            ],
+            yAxis : [
+                {
+                    type : 'value'
+                }
+            ],
+            series : [
+                {
+                    name:'Toal access',
+                    type:'line',
+                    smooth:true,
+                    itemStyle: {normal: {areaStyle: {type: 'default'}}},
+                    data:date_time
+                }
+            ]
+        };
+    lineChart.setOption(option2)
+   </script>
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+    <table class="table table-bordered" style="margin-top: 80px">
+        <caption>Top 10 access</caption>
+          <thead>
+            <tr>
+              <th>Client ip</th>
+              <th>URL</th>
+                <th>Count</th>
+            </tr>
+          </thead>
+          <tbody>
+                {% for foo in top_10 %}
+                    <tr>
+                        <th>{{ foo.0 }}</th>
+                        <th>{{ foo.1 }}</th>
+                        <th>{{ foo.2 }}</th>
+                     </tr>
+                {% endfor %}
+          </tbody>
+    </table>
+{% endblock %}
